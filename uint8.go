@@ -4,3 +4,13 @@ package pointer
 func Uint8(v uint8) *uint8 {
 	return &v
 }
+
+// Uint8Slice returns a slice of pointer to uint8.
+func Uint8Slice(a ...uint8) []*uint8 {
+	p := make([]*uint8, len(a))
+	for i, v := range a {
+		v := v
+		p[i] = &v
+	}
+	return p
+}

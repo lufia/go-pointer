@@ -18,3 +18,23 @@ func TestUint32(t *testing.T) {
 		}
 	}
 }
+
+func TestUint32Slice(t *testing.T) {
+	data := []uint32{
+		0, 1, ^uint32(0),
+	}
+	a := Uint32Slice(data...)
+	if len(a) != len(data) {
+		t.Errorf("len(slice) = %d; want %d", len(a), len(data))
+		return
+	}
+	for i, p := range a {
+		v := data[i]
+		switch {
+		case p == nil:
+			t.Errorf("Uint32Slice(%v)[%d] = nil; want %v", data, i, v)
+		case *p != v:
+			t.Errorf("Uint32Slice(%v)[%d] = %v; want %v", data, i, *p, v)
+		}
+	}
+}

@@ -18,3 +18,23 @@ func TestString(t *testing.T) {
 		}
 	}
 }
+
+func TestStringSlice(t *testing.T) {
+	data := []string{
+		"", "hello, world!\n", "日本語",
+	}
+	a := StringSlice(data...)
+	if len(a) != len(data) {
+		t.Errorf("len(slice) = %d; want %d", len(a), len(data))
+		return
+	}
+	for i, p := range a {
+		v := data[i]
+		switch {
+		case p == nil:
+			t.Errorf("StringSlice(%v)[%d] = nil; want %v", data, i, v)
+		case *p != v:
+			t.Errorf("StringSlice(%v)[%d] = %v; want %v", data, i, *p, v)
+		}
+	}
+}

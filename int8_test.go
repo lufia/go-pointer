@@ -18,3 +18,23 @@ func TestInt8(t *testing.T) {
 		}
 	}
 }
+
+func TestInt8Slice(t *testing.T) {
+	data := []int8{
+		-(1 << 7), 0, 1, ^int8(0) >> 1,
+	}
+	a := Int8Slice(data...)
+	if len(a) != len(data) {
+		t.Errorf("len(slice) = %d; want %d", len(a), len(data))
+		return
+	}
+	for i, p := range a {
+		v := data[i]
+		switch {
+		case p == nil:
+			t.Errorf("Int8Slice(%v)[%d] = nil; want %v", data, i, v)
+		case *p != v:
+			t.Errorf("Int8Slice(%v)[%d] = %v; want %v", data, i, *p, v)
+		}
+	}
+}

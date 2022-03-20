@@ -18,3 +18,23 @@ func TestInt64(t *testing.T) {
 		}
 	}
 }
+
+func TestInt64Slice(t *testing.T) {
+	data := []int64{
+		-(1 << 63), -1, 0, 1, ^int64(0) >> 1,
+	}
+	a := Int64Slice(data...)
+	if len(a) != len(data) {
+		t.Errorf("len(slice) = %d; want %d", len(a), len(data))
+		return
+	}
+	for i, p := range a {
+		v := data[i]
+		switch {
+		case p == nil:
+			t.Errorf("Int64Slice(%v)[%d] = nil; want %v", data, i, v)
+		case *p != v:
+			t.Errorf("Int64Slice(%v)[%d] = %v; want %v", data, i, *p, v)
+		}
+	}
+}
