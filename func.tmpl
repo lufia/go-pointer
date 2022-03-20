@@ -4,3 +4,13 @@ package pointer
 func {{.FuncName}}(v {{.Type}}) *{{.Type}} {
 	return &v
 }
+
+// {{.FuncName}}Slice returns a slice of pointer to {{.Type}}.
+func {{.FuncName}}Slice(a ...{{.Type}}) []*{{.Type}} {
+	p := make([]*{{.Type}}, len(a))
+	for i, v := range a {
+		v := v
+		p[i] = &v
+	}
+	return p
+}

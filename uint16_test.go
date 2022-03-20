@@ -18,3 +18,23 @@ func TestUint16(t *testing.T) {
 		}
 	}
 }
+
+func TestUint16Slice(t *testing.T) {
+	data := []uint16{
+		0, 1, ^uint16(0),
+	}
+	a := Uint16Slice(data...)
+	if len(a) != len(data) {
+		t.Errorf("len(slice) = %d; want %d", len(a), len(data))
+		return
+	}
+	for i, p := range a {
+		v := data[i]
+		switch {
+		case p == nil:
+			t.Errorf("Uint16Slice(%v)[%d] = nil; want %v", data, i, v)
+		case *p != v:
+			t.Errorf("Uint16Slice(%v)[%d] = %v; want %v", data, i, *p, v)
+		}
+	}
+}

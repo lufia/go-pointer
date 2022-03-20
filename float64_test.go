@@ -18,3 +18,23 @@ func TestFloat64(t *testing.T) {
 		}
 	}
 }
+
+func TestFloat64Slice(t *testing.T) {
+	data := []float64{
+		0., 72.40, 6.67428e-11,
+	}
+	a := Float64Slice(data...)
+	if len(a) != len(data) {
+		t.Errorf("len(slice) = %d; want %d", len(a), len(data))
+		return
+	}
+	for i, p := range a {
+		v := data[i]
+		switch {
+		case p == nil:
+			t.Errorf("Float64Slice(%v)[%d] = nil; want %v", data, i, v)
+		case *p != v:
+			t.Errorf("Float64Slice(%v)[%d] = %v; want %v", data, i, *p, v)
+		}
+	}
+}
