@@ -40,7 +40,7 @@ func main() {
 
 [godev-image]: https://pkg.go.dev/badge/github.com/lufia/go-pointer
 [godev-url]: https://pkg.go.dev/github.com/lufia/go-pointer
-[actions-image]: https://github.com/lufia/go-pointer/workflows/Test/badge.svg?branch=master
+[actions-image]: https://github.com/lufia/go-pointer/workflows/Test/badge.svg?branch=main
 [actions-url]: https://github.com/lufia/go-pointer/actions?workflow=Test
 [coveralls-image]: https://coveralls.io/repos/github/lufia/go-pointer/badge.svg
 [coveralls-url]: https://coveralls.io/github/lufia/go-pointer
