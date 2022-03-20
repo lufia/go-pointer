@@ -10,11 +10,11 @@ func TestInt8(t *testing.T) {
 	}
 	for _, v := range tests {
 		var p *int8 = Int8(v)
-		switch {
-		case p == nil:
+		if p == nil {
 			t.Errorf("Int8(%v) = nil; want %v", v, v)
-		case *p != v:
-			t.Errorf("Int8(%v) = %v; want %v", v, *p, v)
+		}
+		if n := Int8Value(p); n != v {
+			t.Errorf("Int8(%v) = %v; want %v", v, n, v)
 		}
 	}
 }
@@ -36,5 +36,13 @@ func TestInt8Slice(t *testing.T) {
 		case *p != v:
 			t.Errorf("Int8Slice(%v)[%d] = %v; want %v", data, i, *p, v)
 		}
+	}
+}
+
+func TestInt8Value_Nil(t *testing.T) {
+	var zero int8
+	v := Int8Value(nil)
+	if v != zero {
+		t.Errorf("Int8Value(nil) = %v; want %v", v, zero)
 	}
 }

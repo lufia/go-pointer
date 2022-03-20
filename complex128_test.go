@@ -10,11 +10,11 @@ func TestComplex128(t *testing.T) {
 	}
 	for _, v := range tests {
 		var p *complex128 = Complex128(v)
-		switch {
-		case p == nil:
+		if p == nil {
 			t.Errorf("Complex128(%v) = nil; want %v", v, v)
-		case *p != v:
-			t.Errorf("Complex128(%v) = %v; want %v", v, *p, v)
+		}
+		if n := Complex128Value(p); n != v {
+			t.Errorf("Complex128(%v) = %v; want %v", v, n, v)
 		}
 	}
 }
@@ -36,5 +36,13 @@ func TestComplex128Slice(t *testing.T) {
 		case *p != v:
 			t.Errorf("Complex128Slice(%v)[%d] = %v; want %v", data, i, *p, v)
 		}
+	}
+}
+
+func TestComplex128Value_Nil(t *testing.T) {
+	var zero complex128
+	v := Complex128Value(nil)
+	if v != zero {
+		t.Errorf("Complex128Value(nil) = %v; want %v", v, zero)
 	}
 }

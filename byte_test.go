@@ -10,11 +10,11 @@ func TestByte(t *testing.T) {
 	}
 	for _, v := range tests {
 		var p *byte = Byte(v)
-		switch {
-		case p == nil:
+		if p == nil {
 			t.Errorf("Byte(%v) = nil; want %v", v, v)
-		case *p != v:
-			t.Errorf("Byte(%v) = %v; want %v", v, *p, v)
+		}
+		if n := ByteValue(p); n != v {
+			t.Errorf("Byte(%v) = %v; want %v", v, n, v)
 		}
 	}
 }
@@ -36,5 +36,13 @@ func TestByteSlice(t *testing.T) {
 		case *p != v:
 			t.Errorf("ByteSlice(%v)[%d] = %v; want %v", data, i, *p, v)
 		}
+	}
+}
+
+func TestByteValue_Nil(t *testing.T) {
+	var zero byte
+	v := ByteValue(nil)
+	if v != zero {
+		t.Errorf("ByteValue(nil) = %v; want %v", v, zero)
 	}
 }

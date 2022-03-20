@@ -8,9 +8,9 @@ import (
 
 func Example() {
 	v := pointer.Int(10)
-	fmt.Println(*v)
+	fmt.Println(pointer.IntValue(v))
 	s := pointer.String("hello")
-	fmt.Println(*s)
+	fmt.Println(pointer.StringValue(s))
 	// Output:
 	// 10
 	// hello
@@ -19,7 +19,7 @@ func Example() {
 func Example_IntSlice() {
 	a := pointer.IntSlice(10, 20)
 	for _, p := range a {
-		fmt.Println(*p)
+		fmt.Println(pointer.IntValue(p))
 	}
 	// Output:
 	// 10

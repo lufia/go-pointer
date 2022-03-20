@@ -14,3 +14,12 @@ func IntSlice(a ...int) []*int {
 	}
 	return p
 }
+
+// IntValue returns a value referenced by p. If p is nil, it will returns zero value of int.
+func IntValue(p *int) int {
+	if p != nil {
+		return *p
+	}
+	var v int
+	return v
+}

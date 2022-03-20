@@ -14,3 +14,12 @@ func Uint64Slice(a ...uint64) []*uint64 {
 	}
 	return p
 }
+
+// Uint64Value returns a value referenced by p. If p is nil, it will returns zero value of uint64.
+func Uint64Value(p *uint64) uint64 {
+	if p != nil {
+		return *p
+	}
+	var v uint64
+	return v
+}

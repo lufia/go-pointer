@@ -14,3 +14,12 @@ func {{.FuncName}}Slice(a ...{{.Type}}) []*{{.Type}} {
 	}
 	return p
 }
+
+// {{.FuncName}}Value returns a value referenced by p. If p is nil, it will returns zero value of {{.Type}}.
+func {{.FuncName}}Value(p *{{.Type}}) {{.Type}} {
+	if p != nil {
+		return *p
+	}
+	var v {{.Type}}
+	return v
+}

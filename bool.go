@@ -14,3 +14,12 @@ func BoolSlice(a ...bool) []*bool {
 	}
 	return p
 }
+
+// BoolValue returns a value referenced by p. If p is nil, it will returns zero value of bool.
+func BoolValue(p *bool) bool {
+	if p != nil {
+		return *p
+	}
+	var v bool
+	return v
+}

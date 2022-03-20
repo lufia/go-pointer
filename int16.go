@@ -14,3 +14,12 @@ func Int16Slice(a ...int16) []*int16 {
 	}
 	return p
 }
+
+// Int16Value returns a value referenced by p. If p is nil, it will returns zero value of int16.
+func Int16Value(p *int16) int16 {
+	if p != nil {
+		return *p
+	}
+	var v int16
+	return v
+}

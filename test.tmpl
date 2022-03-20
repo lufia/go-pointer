@@ -10,11 +10,11 @@ func Test{{.FuncName}}(t *testing.T) {
 	}
 	for _, v := range tests {
 		var p *{{.Type}} = {{.FuncName}}(v)
-		switch {
-		case p == nil:
+		if p == nil {
 			t.Errorf("{{.FuncName}}(%v) = nil; want %v", v, v)
-		case *p != v:
-			t.Errorf("{{.FuncName}}(%v) = %v; want %v", v, *p, v)
+		}
+		if n := {{.FuncName}}Value(p); n != v {
+			t.Errorf("{{.FuncName}}(%v) = %v; want %v", v, n, v)
 		}
 	}
 }
@@ -36,5 +36,13 @@ func Test{{.FuncName}}Slice(t *testing.T) {
 		case *p != v:
 			t.Errorf("{{.FuncName}}Slice(%v)[%d] = %v; want %v", data, i, *p, v)
 		}
+	}
+}
+
+func Test{{.FuncName}}Value_Nil(t *testing.T) {
+	var zero {{.Type}}
+	v := {{.FuncName}}Value(nil)
+	if v != zero {
+		t.Errorf("{{.FuncName}}Value(nil) = %v; want %v", v, zero)
 	}
 }

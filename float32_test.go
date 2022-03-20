@@ -10,11 +10,11 @@ func TestFloat32(t *testing.T) {
 	}
 	for _, v := range tests {
 		var p *float32 = Float32(v)
-		switch {
-		case p == nil:
+		if p == nil {
 			t.Errorf("Float32(%v) = nil; want %v", v, v)
-		case *p != v:
-			t.Errorf("Float32(%v) = %v; want %v", v, *p, v)
+		}
+		if n := Float32Value(p); n != v {
+			t.Errorf("Float32(%v) = %v; want %v", v, n, v)
 		}
 	}
 }
@@ -36,5 +36,13 @@ func TestFloat32Slice(t *testing.T) {
 		case *p != v:
 			t.Errorf("Float32Slice(%v)[%d] = %v; want %v", data, i, *p, v)
 		}
+	}
+}
+
+func TestFloat32Value_Nil(t *testing.T) {
+	var zero float32
+	v := Float32Value(nil)
+	if v != zero {
+		t.Errorf("Float32Value(nil) = %v; want %v", v, zero)
 	}
 }

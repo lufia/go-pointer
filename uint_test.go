@@ -10,11 +10,11 @@ func TestUint(t *testing.T) {
 	}
 	for _, v := range tests {
 		var p *uint = Uint(v)
-		switch {
-		case p == nil:
+		if p == nil {
 			t.Errorf("Uint(%v) = nil; want %v", v, v)
-		case *p != v:
-			t.Errorf("Uint(%v) = %v; want %v", v, *p, v)
+		}
+		if n := UintValue(p); n != v {
+			t.Errorf("Uint(%v) = %v; want %v", v, n, v)
 		}
 	}
 }
@@ -36,5 +36,13 @@ func TestUintSlice(t *testing.T) {
 		case *p != v:
 			t.Errorf("UintSlice(%v)[%d] = %v; want %v", data, i, *p, v)
 		}
+	}
+}
+
+func TestUintValue_Nil(t *testing.T) {
+	var zero uint
+	v := UintValue(nil)
+	if v != zero {
+		t.Errorf("UintValue(nil) = %v; want %v", v, zero)
 	}
 }

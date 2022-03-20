@@ -10,11 +10,11 @@ func TestString(t *testing.T) {
 	}
 	for _, v := range tests {
 		var p *string = String(v)
-		switch {
-		case p == nil:
+		if p == nil {
 			t.Errorf("String(%v) = nil; want %v", v, v)
-		case *p != v:
-			t.Errorf("String(%v) = %v; want %v", v, *p, v)
+		}
+		if n := StringValue(p); n != v {
+			t.Errorf("String(%v) = %v; want %v", v, n, v)
 		}
 	}
 }
@@ -36,5 +36,13 @@ func TestStringSlice(t *testing.T) {
 		case *p != v:
 			t.Errorf("StringSlice(%v)[%d] = %v; want %v", data, i, *p, v)
 		}
+	}
+}
+
+func TestStringValue_Nil(t *testing.T) {
+	var zero string
+	v := StringValue(nil)
+	if v != zero {
+		t.Errorf("StringValue(nil) = %v; want %v", v, zero)
 	}
 }

@@ -10,11 +10,11 @@ func TestInt32(t *testing.T) {
 	}
 	for _, v := range tests {
 		var p *int32 = Int32(v)
-		switch {
-		case p == nil:
+		if p == nil {
 			t.Errorf("Int32(%v) = nil; want %v", v, v)
-		case *p != v:
-			t.Errorf("Int32(%v) = %v; want %v", v, *p, v)
+		}
+		if n := Int32Value(p); n != v {
+			t.Errorf("Int32(%v) = %v; want %v", v, n, v)
 		}
 	}
 }
@@ -36,5 +36,13 @@ func TestInt32Slice(t *testing.T) {
 		case *p != v:
 			t.Errorf("Int32Slice(%v)[%d] = %v; want %v", data, i, *p, v)
 		}
+	}
+}
+
+func TestInt32Value_Nil(t *testing.T) {
+	var zero int32
+	v := Int32Value(nil)
+	if v != zero {
+		t.Errorf("Int32Value(nil) = %v; want %v", v, zero)
 	}
 }
