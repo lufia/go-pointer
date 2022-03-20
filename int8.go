@@ -14,3 +14,12 @@ func Int8Slice(a ...int8) []*int8 {
 	}
 	return p
 }
+
+// Int8Value returns a value referenced by p. If p is nil, it will returns zero value of int8.
+func Int8Value(p *int8) int8 {
+	if p != nil {
+		return *p
+	}
+	var v int8
+	return v
+}

@@ -17,3 +17,12 @@ func Slice[T any](a ...T) []*T {
 	}
 	return p
 }
+
+// Value returns a value referenced by p. If p is nil, it will returns zero value of T.
+func Value[T any](p *T) T {
+	if p != nil {
+		return *p
+	}
+	var v T
+	return v
+}

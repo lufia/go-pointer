@@ -10,11 +10,11 @@ func TestInt(t *testing.T) {
 	}
 	for _, v := range tests {
 		var p *int = Int(v)
-		switch {
-		case p == nil:
+		if p == nil {
 			t.Errorf("Int(%v) = nil; want %v", v, v)
-		case *p != v:
-			t.Errorf("Int(%v) = %v; want %v", v, *p, v)
+		}
+		if n := IntValue(p); n != v {
+			t.Errorf("Int(%v) = %v; want %v", v, n, v)
 		}
 	}
 }
@@ -36,5 +36,13 @@ func TestIntSlice(t *testing.T) {
 		case *p != v:
 			t.Errorf("IntSlice(%v)[%d] = %v; want %v", data, i, *p, v)
 		}
+	}
+}
+
+func TestIntValue_Nil(t *testing.T) {
+	var zero int
+	v := IntValue(nil)
+	if v != zero {
+		t.Errorf("IntValue(nil) = %v; want %v", v, zero)
 	}
 }

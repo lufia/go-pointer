@@ -10,11 +10,11 @@ func TestBool(t *testing.T) {
 	}
 	for _, v := range tests {
 		var p *bool = Bool(v)
-		switch {
-		case p == nil:
+		if p == nil {
 			t.Errorf("Bool(%v) = nil; want %v", v, v)
-		case *p != v:
-			t.Errorf("Bool(%v) = %v; want %v", v, *p, v)
+		}
+		if n := BoolValue(p); n != v {
+			t.Errorf("Bool(%v) = %v; want %v", v, n, v)
 		}
 	}
 }
@@ -36,5 +36,13 @@ func TestBoolSlice(t *testing.T) {
 		case *p != v:
 			t.Errorf("BoolSlice(%v)[%d] = %v; want %v", data, i, *p, v)
 		}
+	}
+}
+
+func TestBoolValue_Nil(t *testing.T) {
+	var zero bool
+	v := BoolValue(nil)
+	if v != zero {
+		t.Errorf("BoolValue(nil) = %v; want %v", v, zero)
 	}
 }

@@ -10,11 +10,11 @@ func TestFloat64(t *testing.T) {
 	}
 	for _, v := range tests {
 		var p *float64 = Float64(v)
-		switch {
-		case p == nil:
+		if p == nil {
 			t.Errorf("Float64(%v) = nil; want %v", v, v)
-		case *p != v:
-			t.Errorf("Float64(%v) = %v; want %v", v, *p, v)
+		}
+		if n := Float64Value(p); n != v {
+			t.Errorf("Float64(%v) = %v; want %v", v, n, v)
 		}
 	}
 }
@@ -36,5 +36,13 @@ func TestFloat64Slice(t *testing.T) {
 		case *p != v:
 			t.Errorf("Float64Slice(%v)[%d] = %v; want %v", data, i, *p, v)
 		}
+	}
+}
+
+func TestFloat64Value_Nil(t *testing.T) {
+	var zero float64
+	v := Float64Value(nil)
+	if v != zero {
+		t.Errorf("Float64Value(nil) = %v; want %v", v, zero)
 	}
 }

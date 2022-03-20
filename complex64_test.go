@@ -10,11 +10,11 @@ func TestComplex64(t *testing.T) {
 	}
 	for _, v := range tests {
 		var p *complex64 = Complex64(v)
-		switch {
-		case p == nil:
+		if p == nil {
 			t.Errorf("Complex64(%v) = nil; want %v", v, v)
-		case *p != v:
-			t.Errorf("Complex64(%v) = %v; want %v", v, *p, v)
+		}
+		if n := Complex64Value(p); n != v {
+			t.Errorf("Complex64(%v) = %v; want %v", v, n, v)
 		}
 	}
 }
@@ -36,5 +36,13 @@ func TestComplex64Slice(t *testing.T) {
 		case *p != v:
 			t.Errorf("Complex64Slice(%v)[%d] = %v; want %v", data, i, *p, v)
 		}
+	}
+}
+
+func TestComplex64Value_Nil(t *testing.T) {
+	var zero complex64
+	v := Complex64Value(nil)
+	if v != zero {
+		t.Errorf("Complex64Value(nil) = %v; want %v", v, zero)
 	}
 }

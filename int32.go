@@ -14,3 +14,12 @@ func Int32Slice(a ...int32) []*int32 {
 	}
 	return p
 }
+
+// Int32Value returns a value referenced by p. If p is nil, it will returns zero value of int32.
+func Int32Value(p *int32) int32 {
+	if p != nil {
+		return *p
+	}
+	var v int32
+	return v
+}

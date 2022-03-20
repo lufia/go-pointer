@@ -14,3 +14,12 @@ func UintSlice(a ...uint) []*uint {
 	}
 	return p
 }
+
+// UintValue returns a value referenced by p. If p is nil, it will returns zero value of uint.
+func UintValue(p *uint) uint {
+	if p != nil {
+		return *p
+	}
+	var v uint
+	return v
+}

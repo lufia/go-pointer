@@ -10,11 +10,11 @@ func TestInt64(t *testing.T) {
 	}
 	for _, v := range tests {
 		var p *int64 = Int64(v)
-		switch {
-		case p == nil:
+		if p == nil {
 			t.Errorf("Int64(%v) = nil; want %v", v, v)
-		case *p != v:
-			t.Errorf("Int64(%v) = %v; want %v", v, *p, v)
+		}
+		if n := Int64Value(p); n != v {
+			t.Errorf("Int64(%v) = %v; want %v", v, n, v)
 		}
 	}
 }
@@ -36,5 +36,13 @@ func TestInt64Slice(t *testing.T) {
 		case *p != v:
 			t.Errorf("Int64Slice(%v)[%d] = %v; want %v", data, i, *p, v)
 		}
+	}
+}
+
+func TestInt64Value_Nil(t *testing.T) {
+	var zero int64
+	v := Int64Value(nil)
+	if v != zero {
+		t.Errorf("Int64Value(nil) = %v; want %v", v, zero)
 	}
 }

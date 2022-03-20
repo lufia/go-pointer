@@ -11,20 +11,20 @@ import (
 
 func Example_go1_18() {
 	s := pointer.New("hello")
-	fmt.Println(*s)
+	fmt.Println(pointer.Value(s))
 	// Output: hello
 }
 
 func Example_New() {
 	p := pointer.New(10)
-	fmt.Println(*p)
+	fmt.Println(pointer.Value(p))
 	// Output: 10
 }
 
 func Example_Slice() {
 	a := pointer.Slice(10, 20)
 	for _, p := range a {
-		fmt.Println(*p)
+		fmt.Println(pointer.Value(p))
 	}
 	// Output:
 	// 10

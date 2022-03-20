@@ -14,3 +14,12 @@ func Complex128Slice(a ...complex128) []*complex128 {
 	}
 	return p
 }
+
+// Complex128Value returns a value referenced by p. If p is nil, it will returns zero value of complex128.
+func Complex128Value(p *complex128) complex128 {
+	if p != nil {
+		return *p
+	}
+	var v complex128
+	return v
+}

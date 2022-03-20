@@ -14,11 +14,11 @@ func TestNew_int(t *testing.T) {
 	}
 	for _, v := range tests {
 		var p *int = New(v)
-		switch {
-		case p == nil:
+		if p == nil {
 			t.Errorf("New(%d) = nil; want %d", v, v)
-		case *p != v:
-			t.Errorf("New(%d) = %d; want %d", v, *p, v)
+		}
+		if n := Value(p); n != v {
+			t.Errorf("New(%d) = %d; want %d", v, n, v)
 		}
 	}
 }
@@ -43,4 +43,11 @@ func deref[T any](a []*T) []T {
 		p[i] = *v
 	}
 	return p
+}
+
+func TestValue_Nil_int(t *testing.T) {
+	v := Value[int](nil)
+	if v != 0 {
+		t.Errorf("Value[int](nil) = %v; want 0", v)
+	}
 }

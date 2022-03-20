@@ -10,11 +10,11 @@ func TestRune(t *testing.T) {
 	}
 	for _, v := range tests {
 		var p *rune = Rune(v)
-		switch {
-		case p == nil:
+		if p == nil {
 			t.Errorf("Rune(%v) = nil; want %v", v, v)
-		case *p != v:
-			t.Errorf("Rune(%v) = %v; want %v", v, *p, v)
+		}
+		if n := RuneValue(p); n != v {
+			t.Errorf("Rune(%v) = %v; want %v", v, n, v)
 		}
 	}
 }
@@ -36,5 +36,13 @@ func TestRuneSlice(t *testing.T) {
 		case *p != v:
 			t.Errorf("RuneSlice(%v)[%d] = %v; want %v", data, i, *p, v)
 		}
+	}
+}
+
+func TestRuneValue_Nil(t *testing.T) {
+	var zero rune
+	v := RuneValue(nil)
+	if v != zero {
+		t.Errorf("RuneValue(nil) = %v; want %v", v, zero)
 	}
 }

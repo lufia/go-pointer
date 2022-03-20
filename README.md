@@ -8,9 +8,9 @@ Utilities that returns a pointer to the value.
 
 ## DESCRIPTION
 
-**go-pointer** provides functions returned pointer to basic types in Go such as  *Int*, *Uint32* and *String*. When your Go version is 1.18 or higher, it provides generic *New* function too.
+**go-pointer** provides functions that is returned pointer to basic types in Go such as *Int*, *Uint32* and *String*, and functions that returned a value referenced by the pointer, such as *IntValue* and *StringValue*. When your Go version is 1.18 or higher, it provides generic *New*, *Value* function too.
 
-Rarely, when you need a slice of pointer to any basic types, you can use **Slice**-suffixed functions corresponded to the type.
+Rarely, when you need a slice of pointer to any basic types, you can use *Slice*-suffixed functions corresponded to the type.
 
 ### EXAMPLE
 
@@ -23,17 +23,17 @@ import (
 
 func main() {
 	p := pointer.Int(10)
-	fmt.Printf("p = %d\n", *p)
+	fmt.Printf("p = %d\n", pointer.IntValue(p))
 
 	for _, p := range pointer.StringSlice("hello", "world") {
-		fmt.Printf("p = %s\n", *p)
+		fmt.Printf("p = %s\n", pointer.StringValue(p))
 	}
 
 	// Go 1.18 or higher
 	q := pointer.New(20)
-	fmt.Printf("q = %d\n", *q)
+	fmt.Printf("q = %d\n", pointer.Value(q))
 	for _, p := range pointer.Slice(10, 20) {
-		fmt.Printf("p = %d\n", *p)
+		fmt.Printf("p = %d\n", pointer.Value(p))
 	}
 }
 ```

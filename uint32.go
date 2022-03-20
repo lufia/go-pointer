@@ -14,3 +14,12 @@ func Uint32Slice(a ...uint32) []*uint32 {
 	}
 	return p
 }
+
+// Uint32Value returns a value referenced by p. If p is nil, it will returns zero value of uint32.
+func Uint32Value(p *uint32) uint32 {
+	if p != nil {
+		return *p
+	}
+	var v uint32
+	return v
+}

@@ -14,3 +14,12 @@ func Complex64Slice(a ...complex64) []*complex64 {
 	}
 	return p
 }
+
+// Complex64Value returns a value referenced by p. If p is nil, it will returns zero value of complex64.
+func Complex64Value(p *complex64) complex64 {
+	if p != nil {
+		return *p
+	}
+	var v complex64
+	return v
+}

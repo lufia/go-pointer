@@ -14,3 +14,12 @@ func Float64Slice(a ...float64) []*float64 {
 	}
 	return p
 }
+
+// Float64Value returns a value referenced by p. If p is nil, it will returns zero value of float64.
+func Float64Value(p *float64) float64 {
+	if p != nil {
+		return *p
+	}
+	var v float64
+	return v
+}

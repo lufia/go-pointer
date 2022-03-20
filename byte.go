@@ -14,3 +14,12 @@ func ByteSlice(a ...byte) []*byte {
 	}
 	return p
 }
+
+// ByteValue returns a value referenced by p. If p is nil, it will returns zero value of byte.
+func ByteValue(p *byte) byte {
+	if p != nil {
+		return *p
+	}
+	var v byte
+	return v
+}

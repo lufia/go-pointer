@@ -14,3 +14,12 @@ func RuneSlice(a ...rune) []*rune {
 	}
 	return p
 }
+
+// RuneValue returns a value referenced by p. If p is nil, it will returns zero value of rune.
+func RuneValue(p *rune) rune {
+	if p != nil {
+		return *p
+	}
+	var v rune
+	return v
+}

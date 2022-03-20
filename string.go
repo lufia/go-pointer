@@ -14,3 +14,12 @@ func StringSlice(a ...string) []*string {
 	}
 	return p
 }
+
+// StringValue returns a value referenced by p. If p is nil, it will returns zero value of string.
+func StringValue(p *string) string {
+	if p != nil {
+		return *p
+	}
+	var v string
+	return v
+}
