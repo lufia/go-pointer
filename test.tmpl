@@ -1,0 +1,20 @@
+package pointer
+
+import (
+	"testing"
+)
+
+func Test{{.FuncName}}(t *testing.T) {
+	tests := []{{.Type}}{
+		{{range .TestData}}{{.}}, {{- end}}
+	}
+	for _, v := range tests {
+		var p *{{.Type}} = {{.FuncName}}(v)
+		switch {
+		case p == nil:
+			t.Errorf("{{.FuncName}}(%v) = nil; want %v", v, v)
+		case *p != v:
+			t.Errorf("{{.FuncName}}(%v) = %v; want %v", v, *p, v)
+		}
+	}
+}
