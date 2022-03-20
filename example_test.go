@@ -9,7 +9,7 @@ import (
 func Example() {
 	v := pointer.Int(10)
 	fmt.Println(*v)
-	s := pointer.New("hello")
+	s := pointer.String("hello")
 	fmt.Println(*s)
 	// Output:
 	// 10
