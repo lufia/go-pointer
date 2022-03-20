@@ -1,12 +1,5 @@
-//go:build go1.18
-// +build go1.18
-
+// Package pointer provides functions that returns pointer to basic type.
 package pointer
-
-// New returns a pointer to T that is initialized with v.
-func New[T any](v T) *T {
-	return &v
-}
 
 //go:generate go run generate.go -type bool true false
 
