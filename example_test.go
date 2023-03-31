@@ -35,3 +35,11 @@ func ExampleEqualInt() {
 	// true
 	// false
 }
+
+func ExampleIntFormatter_Format() {
+	fmt.Printf("%v\n", pointer.NewIntFormatter(pointer.Int(10)))
+	fmt.Printf("%v\n", pointer.NewStringFormatter(nil))
+	// Output:
+	// 10
+	// <nil>
+}

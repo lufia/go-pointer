@@ -40,3 +40,11 @@ func ExampleEqual() {
 	// true
 	// false
 }
+
+func ExampleFormatter_Format() {
+	fmt.Printf("%v\n", pointer.NewFormatter(pointer.New(10)))
+	fmt.Printf("%v\n", pointer.NewFormatter[string](nil))
+	// Output:
+	// 10
+	// <nil>
+}

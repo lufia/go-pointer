@@ -1,5 +1,7 @@
 package pointer
 
+import "fmt"
+
 // Int32 returns a pointer to int32 that is initialized with v.
 func Int32(v int32) *int32 {
 	return &v
@@ -30,4 +32,23 @@ func EqualInt32(p1, p2 *int32) bool {
 		return p1 == p2
 	}
 	return *p1 == *p2
+}
+
+// Int32Formatter implements fmt.Formatter of a pointer to int32.
+type Int32Formatter struct {
+	p *int32
+}
+
+// NewInt32Formatter returns the formatter of a pointer to int32.
+func NewInt32Formatter(p *int32) *Int32Formatter {
+	return &Int32Formatter{p}
+}
+
+// Format implements the fmt.Formatter interface.
+func (p Int32Formatter) Format(f fmt.State, c rune) {
+	if p.p == nil {
+		fmt.Fprintf(f, "<nil>")
+		return
+	}
+	fmt.Fprintf(f, "%"+string(c), *p.p)
 }

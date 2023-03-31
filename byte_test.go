@@ -1,6 +1,7 @@
 package pointer
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -62,6 +63,24 @@ func TestEqualByte(t *testing.T) {
 	for _, tt := range tests {
 		if eq := EqualByte(tt.v1, tt.v2); eq != tt.eq {
 			t.Errorf("EqualByte(%d, %d) = %t; want %t", tt.v1, tt.v2, eq, tt.eq)
+		}
+	}
+}
+
+func TestByteFormatterFormat(t *testing.T) {
+	tests := []struct {
+		p *byte
+		s string
+	}{
+		{Byte(0), fmt.Sprintf("%v", 0)},
+		{Byte('a'), fmt.Sprintf("%v", 'a')},
+		{nil, "<nil>"},
+	}
+	for _, tt := range tests {
+		p := NewByteFormatter(tt.p)
+		s := fmt.Sprintf("%v", p)
+		if s != tt.s {
+			t.Errorf("{%+v}.Format() = %q; want %q", p, s, tt.s)
 		}
 	}
 }

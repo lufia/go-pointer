@@ -1,6 +1,7 @@
 package pointer
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -62,6 +63,24 @@ func TestEqualFloat64(t *testing.T) {
 	for _, tt := range tests {
 		if eq := EqualFloat64(tt.v1, tt.v2); eq != tt.eq {
 			t.Errorf("EqualFloat64(%d, %d) = %t; want %t", tt.v1, tt.v2, eq, tt.eq)
+		}
+	}
+}
+
+func TestFloat64FormatterFormat(t *testing.T) {
+	tests := []struct {
+		p *float64
+		s string
+	}{
+		{Float64(0.), fmt.Sprintf("%v", 0.)},
+		{Float64(72.40), fmt.Sprintf("%v", 72.40)},
+		{nil, "<nil>"},
+	}
+	for _, tt := range tests {
+		p := NewFloat64Formatter(tt.p)
+		s := fmt.Sprintf("%v", p)
+		if s != tt.s {
+			t.Errorf("{%+v}.Format() = %q; want %q", p, s, tt.s)
 		}
 	}
 }

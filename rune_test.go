@@ -1,6 +1,7 @@
 package pointer
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -62,6 +63,24 @@ func TestEqualRune(t *testing.T) {
 	for _, tt := range tests {
 		if eq := EqualRune(tt.v1, tt.v2); eq != tt.eq {
 			t.Errorf("EqualRune(%d, %d) = %t; want %t", tt.v1, tt.v2, eq, tt.eq)
+		}
+	}
+}
+
+func TestRuneFormatterFormat(t *testing.T) {
+	tests := []struct {
+		p *rune
+		s string
+	}{
+		{Rune(0), fmt.Sprintf("%v", 0)},
+		{Rune('a'), fmt.Sprintf("%v", 'a')},
+		{nil, "<nil>"},
+	}
+	for _, tt := range tests {
+		p := NewRuneFormatter(tt.p)
+		s := fmt.Sprintf("%v", p)
+		if s != tt.s {
+			t.Errorf("{%+v}.Format() = %q; want %q", p, s, tt.s)
 		}
 	}
 }

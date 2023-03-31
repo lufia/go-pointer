@@ -1,5 +1,7 @@
 package pointer
 
+import "fmt"
+
 // {{.Name}} returns a pointer to {{.Type}} that is initialized with v.
 func {{.Name}}(v {{.Type}}) *{{.Type}} {
 	return &v
@@ -30,4 +32,23 @@ func Equal{{.Name}}(p1, p2 *{{.Type}}) bool {
 		return p1 == p2
 	}
 	return *p1 == *p2
+}
+
+// {{.Name}}Formatter implements fmt.Formatter of a pointer to {{.Type}}.
+type {{.Name}}Formatter struct {
+	p *{{.Type}}
+}
+
+// New{{.Name}}Formatter returns the formatter of a pointer to {{.Type}}.
+func New{{.Name}}Formatter(p *{{.Type}}) *{{.Name}}Formatter {
+	return &{{.Name}}Formatter{p}
+}
+
+// Format implements the fmt.Formatter interface.
+func (p {{.Name}}Formatter) Format(f fmt.State, c rune) {
+	if p.p == nil {
+		fmt.Fprintf(f, "<nil>")
+		return
+	}
+	fmt.Fprintf(f, "%"+string(c), *p.p)
 }

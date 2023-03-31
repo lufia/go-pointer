@@ -1,6 +1,7 @@
 package pointer
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -62,6 +63,24 @@ func TestEqualUint(t *testing.T) {
 	for _, tt := range tests {
 		if eq := EqualUint(tt.v1, tt.v2); eq != tt.eq {
 			t.Errorf("EqualUint(%d, %d) = %t; want %t", tt.v1, tt.v2, eq, tt.eq)
+		}
+	}
+}
+
+func TestUintFormatterFormat(t *testing.T) {
+	tests := []struct {
+		p *uint
+		s string
+	}{
+		{Uint(0), fmt.Sprintf("%v", 0)},
+		{Uint(1), fmt.Sprintf("%v", 1)},
+		{nil, "<nil>"},
+	}
+	for _, tt := range tests {
+		p := NewUintFormatter(tt.p)
+		s := fmt.Sprintf("%v", p)
+		if s != tt.s {
+			t.Errorf("{%+v}.Format() = %q; want %q", p, s, tt.s)
 		}
 	}
 }

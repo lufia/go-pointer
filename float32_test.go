@@ -1,6 +1,7 @@
 package pointer
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -62,6 +63,24 @@ func TestEqualFloat32(t *testing.T) {
 	for _, tt := range tests {
 		if eq := EqualFloat32(tt.v1, tt.v2); eq != tt.eq {
 			t.Errorf("EqualFloat32(%d, %d) = %t; want %t", tt.v1, tt.v2, eq, tt.eq)
+		}
+	}
+}
+
+func TestFloat32FormatterFormat(t *testing.T) {
+	tests := []struct {
+		p *float32
+		s string
+	}{
+		{Float32(0.), fmt.Sprintf("%v", 0.)},
+		{Float32(72.40), fmt.Sprintf("%v", 72.40)},
+		{nil, "<nil>"},
+	}
+	for _, tt := range tests {
+		p := NewFloat32Formatter(tt.p)
+		s := fmt.Sprintf("%v", p)
+		if s != tt.s {
+			t.Errorf("{%+v}.Format() = %q; want %q", p, s, tt.s)
 		}
 	}
 }

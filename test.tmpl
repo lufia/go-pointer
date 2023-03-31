@@ -1,6 +1,7 @@
 package pointer
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -62,6 +63,24 @@ func TestEqual{{.Name}}(t *testing.T) {
 	for _, tt := range tests {
 		if eq := Equal{{.Name}}(tt.v1, tt.v2); eq != tt.eq {
 			t.Errorf("Equal{{.Name}}(%d, %d) = %t; want %t", tt.v1, tt.v2, eq, tt.eq)
+		}
+	}
+}
+
+func Test{{.Name}}FormatterFormat(t *testing.T) {
+	tests := []struct {
+		p *{{.Type}}
+		s string
+	}{
+		{{"{"}}{{.Name}}({{index .TestData 0}}), {{index .TestData 0 | printf `fmt.Sprintf("%%v", %s)`}}{{"}"}},
+		{{"{"}}{{.Name}}({{index .TestData 1}}), {{index .TestData 1 | printf `fmt.Sprintf("%%v", %s)`}}{{"}"}},
+		{nil, "<nil>"},
+	}
+	for _, tt := range tests {
+		p := New{{.Name}}Formatter(tt.p)
+		s := fmt.Sprintf("%v", p)
+		if s != tt.s {
+			t.Errorf("{%+v}.Format() = %q; want %q", p, s, tt.s)
 		}
 	}
 }

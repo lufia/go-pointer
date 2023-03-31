@@ -1,5 +1,7 @@
 package pointer
 
+import "fmt"
+
 // Rune returns a pointer to rune that is initialized with v.
 func Rune(v rune) *rune {
 	return &v
@@ -30,4 +32,23 @@ func EqualRune(p1, p2 *rune) bool {
 		return p1 == p2
 	}
 	return *p1 == *p2
+}
+
+// RuneFormatter implements fmt.Formatter of a pointer to rune.
+type RuneFormatter struct {
+	p *rune
+}
+
+// NewRuneFormatter returns the formatter of a pointer to rune.
+func NewRuneFormatter(p *rune) *RuneFormatter {
+	return &RuneFormatter{p}
+}
+
+// Format implements the fmt.Formatter interface.
+func (p RuneFormatter) Format(f fmt.State, c rune) {
+	if p.p == nil {
+		fmt.Fprintf(f, "<nil>")
+		return
+	}
+	fmt.Fprintf(f, "%"+string(c), *p.p)
 }

@@ -1,6 +1,7 @@
 package pointer
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -62,6 +63,24 @@ func TestEqualInt32(t *testing.T) {
 	for _, tt := range tests {
 		if eq := EqualInt32(tt.v1, tt.v2); eq != tt.eq {
 			t.Errorf("EqualInt32(%d, %d) = %t; want %t", tt.v1, tt.v2, eq, tt.eq)
+		}
+	}
+}
+
+func TestInt32FormatterFormat(t *testing.T) {
+	tests := []struct {
+		p *int32
+		s string
+	}{
+		{Int32(-(1 << 31)), fmt.Sprintf("%v", -(1 << 31))},
+		{Int32(-1), fmt.Sprintf("%v", -1)},
+		{nil, "<nil>"},
+	}
+	for _, tt := range tests {
+		p := NewInt32Formatter(tt.p)
+		s := fmt.Sprintf("%v", p)
+		if s != tt.s {
+			t.Errorf("{%+v}.Format() = %q; want %q", p, s, tt.s)
 		}
 	}
 }

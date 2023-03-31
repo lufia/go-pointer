@@ -1,5 +1,7 @@
 package pointer
 
+import "fmt"
+
 // String returns a pointer to string that is initialized with v.
 func String(v string) *string {
 	return &v
@@ -30,4 +32,23 @@ func EqualString(p1, p2 *string) bool {
 		return p1 == p2
 	}
 	return *p1 == *p2
+}
+
+// StringFormatter implements fmt.Formatter of a pointer to string.
+type StringFormatter struct {
+	p *string
+}
+
+// NewStringFormatter returns the formatter of a pointer to string.
+func NewStringFormatter(p *string) *StringFormatter {
+	return &StringFormatter{p}
+}
+
+// Format implements the fmt.Formatter interface.
+func (p StringFormatter) Format(f fmt.State, c rune) {
+	if p.p == nil {
+		fmt.Fprintf(f, "<nil>")
+		return
+	}
+	fmt.Fprintf(f, "%"+string(c), *p.p)
 }

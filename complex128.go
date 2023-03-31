@@ -1,5 +1,7 @@
 package pointer
 
+import "fmt"
+
 // Complex128 returns a pointer to complex128 that is initialized with v.
 func Complex128(v complex128) *complex128 {
 	return &v
@@ -30,4 +32,23 @@ func EqualComplex128(p1, p2 *complex128) bool {
 		return p1 == p2
 	}
 	return *p1 == *p2
+}
+
+// Complex128Formatter implements fmt.Formatter of a pointer to complex128.
+type Complex128Formatter struct {
+	p *complex128
+}
+
+// NewComplex128Formatter returns the formatter of a pointer to complex128.
+func NewComplex128Formatter(p *complex128) *Complex128Formatter {
+	return &Complex128Formatter{p}
+}
+
+// Format implements the fmt.Formatter interface.
+func (p Complex128Formatter) Format(f fmt.State, c rune) {
+	if p.p == nil {
+		fmt.Fprintf(f, "<nil>")
+		return
+	}
+	fmt.Fprintf(f, "%"+string(c), *p.p)
 }

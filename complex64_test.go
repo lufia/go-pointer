@@ -1,6 +1,7 @@
 package pointer
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -62,6 +63,24 @@ func TestEqualComplex64(t *testing.T) {
 	for _, tt := range tests {
 		if eq := EqualComplex64(tt.v1, tt.v2); eq != tt.eq {
 			t.Errorf("EqualComplex64(%d, %d) = %t; want %t", tt.v1, tt.v2, eq, tt.eq)
+		}
+	}
+}
+
+func TestComplex64FormatterFormat(t *testing.T) {
+	tests := []struct {
+		p *complex64
+		s string
+	}{
+		{Complex64(0i), fmt.Sprintf("%v", 0i)},
+		{Complex64(123i), fmt.Sprintf("%v", 123i)},
+		{nil, "<nil>"},
+	}
+	for _, tt := range tests {
+		p := NewComplex64Formatter(tt.p)
+		s := fmt.Sprintf("%v", p)
+		if s != tt.s {
+			t.Errorf("{%+v}.Format() = %q; want %q", p, s, tt.s)
 		}
 	}
 }

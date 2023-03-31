@@ -1,5 +1,7 @@
 package pointer
 
+import "fmt"
+
 // Uint16 returns a pointer to uint16 that is initialized with v.
 func Uint16(v uint16) *uint16 {
 	return &v
@@ -30,4 +32,23 @@ func EqualUint16(p1, p2 *uint16) bool {
 		return p1 == p2
 	}
 	return *p1 == *p2
+}
+
+// Uint16Formatter implements fmt.Formatter of a pointer to uint16.
+type Uint16Formatter struct {
+	p *uint16
+}
+
+// NewUint16Formatter returns the formatter of a pointer to uint16.
+func NewUint16Formatter(p *uint16) *Uint16Formatter {
+	return &Uint16Formatter{p}
+}
+
+// Format implements the fmt.Formatter interface.
+func (p Uint16Formatter) Format(f fmt.State, c rune) {
+	if p.p == nil {
+		fmt.Fprintf(f, "<nil>")
+		return
+	}
+	fmt.Fprintf(f, "%"+string(c), *p.p)
 }

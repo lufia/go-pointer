@@ -1,6 +1,7 @@
 package pointer
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -62,6 +63,24 @@ func TestEqualInt64(t *testing.T) {
 	for _, tt := range tests {
 		if eq := EqualInt64(tt.v1, tt.v2); eq != tt.eq {
 			t.Errorf("EqualInt64(%d, %d) = %t; want %t", tt.v1, tt.v2, eq, tt.eq)
+		}
+	}
+}
+
+func TestInt64FormatterFormat(t *testing.T) {
+	tests := []struct {
+		p *int64
+		s string
+	}{
+		{Int64(-(1 << 63)), fmt.Sprintf("%v", -(1 << 63))},
+		{Int64(-1), fmt.Sprintf("%v", -1)},
+		{nil, "<nil>"},
+	}
+	for _, tt := range tests {
+		p := NewInt64Formatter(tt.p)
+		s := fmt.Sprintf("%v", p)
+		if s != tt.s {
+			t.Errorf("{%+v}.Format() = %q; want %q", p, s, tt.s)
 		}
 	}
 }

@@ -1,6 +1,7 @@
 package pointer
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -62,6 +63,24 @@ func TestEqualBool(t *testing.T) {
 	for _, tt := range tests {
 		if eq := EqualBool(tt.v1, tt.v2); eq != tt.eq {
 			t.Errorf("EqualBool(%d, %d) = %t; want %t", tt.v1, tt.v2, eq, tt.eq)
+		}
+	}
+}
+
+func TestBoolFormatterFormat(t *testing.T) {
+	tests := []struct {
+		p *bool
+		s string
+	}{
+		{Bool(true), fmt.Sprintf("%v", true)},
+		{Bool(false), fmt.Sprintf("%v", false)},
+		{nil, "<nil>"},
+	}
+	for _, tt := range tests {
+		p := NewBoolFormatter(tt.p)
+		s := fmt.Sprintf("%v", p)
+		if s != tt.s {
+			t.Errorf("{%+v}.Format() = %q; want %q", p, s, tt.s)
 		}
 	}
 }

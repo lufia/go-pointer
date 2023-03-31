@@ -1,5 +1,7 @@
 package pointer
 
+import "fmt"
+
 // Bool returns a pointer to bool that is initialized with v.
 func Bool(v bool) *bool {
 	return &v
@@ -30,4 +32,23 @@ func EqualBool(p1, p2 *bool) bool {
 		return p1 == p2
 	}
 	return *p1 == *p2
+}
+
+// BoolFormatter implements fmt.Formatter of a pointer to bool.
+type BoolFormatter struct {
+	p *bool
+}
+
+// NewBoolFormatter returns the formatter of a pointer to bool.
+func NewBoolFormatter(p *bool) *BoolFormatter {
+	return &BoolFormatter{p}
+}
+
+// Format implements the fmt.Formatter interface.
+func (p BoolFormatter) Format(f fmt.State, c rune) {
+	if p.p == nil {
+		fmt.Fprintf(f, "<nil>")
+		return
+	}
+	fmt.Fprintf(f, "%"+string(c), *p.p)
 }

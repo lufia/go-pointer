@@ -1,5 +1,7 @@
 package pointer
 
+import "fmt"
+
 // Uint8 returns a pointer to uint8 that is initialized with v.
 func Uint8(v uint8) *uint8 {
 	return &v
@@ -30,4 +32,23 @@ func EqualUint8(p1, p2 *uint8) bool {
 		return p1 == p2
 	}
 	return *p1 == *p2
+}
+
+// Uint8Formatter implements fmt.Formatter of a pointer to uint8.
+type Uint8Formatter struct {
+	p *uint8
+}
+
+// NewUint8Formatter returns the formatter of a pointer to uint8.
+func NewUint8Formatter(p *uint8) *Uint8Formatter {
+	return &Uint8Formatter{p}
+}
+
+// Format implements the fmt.Formatter interface.
+func (p Uint8Formatter) Format(f fmt.State, c rune) {
+	if p.p == nil {
+		fmt.Fprintf(f, "<nil>")
+		return
+	}
+	fmt.Fprintf(f, "%"+string(c), *p.p)
 }
