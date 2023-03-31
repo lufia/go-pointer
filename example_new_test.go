@@ -30,3 +30,13 @@ func ExampleSlice() {
 	// 10
 	// 20
 }
+
+func ExampleEqual() {
+	p1 := pointer.New(10)
+	p2 := pointer.New(10)
+	fmt.Println(pointer.Equal(p1, p2))
+	fmt.Println(pointer.Equal(p1, nil))
+	// Output:
+	// true
+	// false
+}
