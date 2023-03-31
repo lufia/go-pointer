@@ -23,3 +23,11 @@ func Int32Value(p *int32) int32 {
 	var v int32
 	return v
 }
+
+// EqualInt32 reports whether p1 and p2 represent the same value.
+func EqualInt32(p1, p2 *int32) bool {
+	if p1 == nil || p2 == nil {
+		return p1 == p2
+	}
+	return *p1 == *p2
+}

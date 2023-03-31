@@ -46,3 +46,22 @@ func TestInt16Value_Nil(t *testing.T) {
 		t.Errorf("Int16Value(nil) = %v; want %v", v, zero)
 	}
 }
+
+func TestEqualInt16(t *testing.T) {
+	tests := []struct {
+		v1, v2 *int16
+		eq     bool
+	}{
+		{Int16(-(1 << 15)), Int16(-1), false},
+		{Int16(-(1 << 15)), Int16(-(1 << 15)), true},
+		{Int16(-1), Int16(-1), true},
+		{nil, nil, true},
+		{nil, Int16(-(1 << 15)), false},
+		{Int16(-(1 << 15)), nil, false},
+	}
+	for _, tt := range tests {
+		if eq := EqualInt16(tt.v1, tt.v2); eq != tt.eq {
+			t.Errorf("EqualInt16(%d, %d) = %t; want %t", tt.v1, tt.v2, eq, tt.eq)
+		}
+	}
+}

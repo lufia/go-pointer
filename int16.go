@@ -23,3 +23,11 @@ func Int16Value(p *int16) int16 {
 	var v int16
 	return v
 }
+
+// EqualInt16 reports whether p1 and p2 represent the same value.
+func EqualInt16(p1, p2 *int16) bool {
+	if p1 == nil || p2 == nil {
+		return p1 == p2
+	}
+	return *p1 == *p2
+}

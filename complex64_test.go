@@ -46,3 +46,22 @@ func TestComplex64Value_Nil(t *testing.T) {
 		t.Errorf("Complex64Value(nil) = %v; want %v", v, zero)
 	}
 }
+
+func TestEqualComplex64(t *testing.T) {
+	tests := []struct {
+		v1, v2 *complex64
+		eq     bool
+	}{
+		{Complex64(0i), Complex64(123i), false},
+		{Complex64(0i), Complex64(0i), true},
+		{Complex64(123i), Complex64(123i), true},
+		{nil, nil, true},
+		{nil, Complex64(0i), false},
+		{Complex64(0i), nil, false},
+	}
+	for _, tt := range tests {
+		if eq := EqualComplex64(tt.v1, tt.v2); eq != tt.eq {
+			t.Errorf("EqualComplex64(%d, %d) = %t; want %t", tt.v1, tt.v2, eq, tt.eq)
+		}
+	}
+}

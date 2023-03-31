@@ -46,3 +46,22 @@ func TestInt64Value_Nil(t *testing.T) {
 		t.Errorf("Int64Value(nil) = %v; want %v", v, zero)
 	}
 }
+
+func TestEqualInt64(t *testing.T) {
+	tests := []struct {
+		v1, v2 *int64
+		eq     bool
+	}{
+		{Int64(-(1 << 63)), Int64(-1), false},
+		{Int64(-(1 << 63)), Int64(-(1 << 63)), true},
+		{Int64(-1), Int64(-1), true},
+		{nil, nil, true},
+		{nil, Int64(-(1 << 63)), false},
+		{Int64(-(1 << 63)), nil, false},
+	}
+	for _, tt := range tests {
+		if eq := EqualInt64(tt.v1, tt.v2); eq != tt.eq {
+			t.Errorf("EqualInt64(%d, %d) = %t; want %t", tt.v1, tt.v2, eq, tt.eq)
+		}
+	}
+}

@@ -23,3 +23,11 @@ func Uint8Value(p *uint8) uint8 {
 	var v uint8
 	return v
 }
+
+// EqualUint8 reports whether p1 and p2 represent the same value.
+func EqualUint8(p1, p2 *uint8) bool {
+	if p1 == nil || p2 == nil {
+		return p1 == p2
+	}
+	return *p1 == *p2
+}

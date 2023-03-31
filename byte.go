@@ -23,3 +23,11 @@ func ByteValue(p *byte) byte {
 	var v byte
 	return v
 }
+
+// EqualByte reports whether p1 and p2 represent the same value.
+func EqualByte(p1, p2 *byte) bool {
+	if p1 == nil || p2 == nil {
+		return p1 == p2
+	}
+	return *p1 == *p2
+}

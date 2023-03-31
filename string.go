@@ -23,3 +23,11 @@ func StringValue(p *string) string {
 	var v string
 	return v
 }
+
+// EqualString reports whether p1 and p2 represent the same value.
+func EqualString(p1, p2 *string) bool {
+	if p1 == nil || p2 == nil {
+		return p1 == p2
+	}
+	return *p1 == *p2
+}

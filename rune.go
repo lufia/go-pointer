@@ -23,3 +23,11 @@ func RuneValue(p *rune) rune {
 	var v rune
 	return v
 }
+
+// EqualRune reports whether p1 and p2 represent the same value.
+func EqualRune(p1, p2 *rune) bool {
+	if p1 == nil || p2 == nil {
+		return p1 == p2
+	}
+	return *p1 == *p2
+}

@@ -23,3 +23,11 @@ func Float32Value(p *float32) float32 {
 	var v float32
 	return v
 }
+
+// EqualFloat32 reports whether p1 and p2 represent the same value.
+func EqualFloat32(p1, p2 *float32) bool {
+	if p1 == nil || p2 == nil {
+		return p1 == p2
+	}
+	return *p1 == *p2
+}

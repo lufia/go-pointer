@@ -23,3 +23,11 @@ func Complex128Value(p *complex128) complex128 {
 	var v complex128
 	return v
 }
+
+// EqualComplex128 reports whether p1 and p2 represent the same value.
+func EqualComplex128(p1, p2 *complex128) bool {
+	if p1 == nil || p2 == nil {
+		return p1 == p2
+	}
+	return *p1 == *p2
+}

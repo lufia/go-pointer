@@ -46,3 +46,22 @@ func TestStringValue_Nil(t *testing.T) {
 		t.Errorf("StringValue(nil) = %v; want %v", v, zero)
 	}
 }
+
+func TestEqualString(t *testing.T) {
+	tests := []struct {
+		v1, v2 *string
+		eq     bool
+	}{
+		{String(""), String("hello, world!\n"), false},
+		{String(""), String(""), true},
+		{String("hello, world!\n"), String("hello, world!\n"), true},
+		{nil, nil, true},
+		{nil, String(""), false},
+		{String(""), nil, false},
+	}
+	for _, tt := range tests {
+		if eq := EqualString(tt.v1, tt.v2); eq != tt.eq {
+			t.Errorf("EqualString(%d, %d) = %t; want %t", tt.v1, tt.v2, eq, tt.eq)
+		}
+	}
+}

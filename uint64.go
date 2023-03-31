@@ -23,3 +23,11 @@ func Uint64Value(p *uint64) uint64 {
 	var v uint64
 	return v
 }
+
+// EqualUint64 reports whether p1 and p2 represent the same value.
+func EqualUint64(p1, p2 *uint64) bool {
+	if p1 == nil || p2 == nil {
+		return p1 == p2
+	}
+	return *p1 == *p2
+}

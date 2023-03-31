@@ -46,3 +46,22 @@ func TestInt8Value_Nil(t *testing.T) {
 		t.Errorf("Int8Value(nil) = %v; want %v", v, zero)
 	}
 }
+
+func TestEqualInt8(t *testing.T) {
+	tests := []struct {
+		v1, v2 *int8
+		eq     bool
+	}{
+		{Int8(-(1 << 7)), Int8(0), false},
+		{Int8(-(1 << 7)), Int8(-(1 << 7)), true},
+		{Int8(0), Int8(0), true},
+		{nil, nil, true},
+		{nil, Int8(-(1 << 7)), false},
+		{Int8(-(1 << 7)), nil, false},
+	}
+	for _, tt := range tests {
+		if eq := EqualInt8(tt.v1, tt.v2); eq != tt.eq {
+			t.Errorf("EqualInt8(%d, %d) = %t; want %t", tt.v1, tt.v2, eq, tt.eq)
+		}
+	}
+}

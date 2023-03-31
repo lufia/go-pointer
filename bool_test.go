@@ -46,3 +46,22 @@ func TestBoolValue_Nil(t *testing.T) {
 		t.Errorf("BoolValue(nil) = %v; want %v", v, zero)
 	}
 }
+
+func TestEqualBool(t *testing.T) {
+	tests := []struct {
+		v1, v2 *bool
+		eq     bool
+	}{
+		{Bool(true), Bool(false), false},
+		{Bool(true), Bool(true), true},
+		{Bool(false), Bool(false), true},
+		{nil, nil, true},
+		{nil, Bool(true), false},
+		{Bool(true), nil, false},
+	}
+	for _, tt := range tests {
+		if eq := EqualBool(tt.v1, tt.v2); eq != tt.eq {
+			t.Errorf("EqualBool(%d, %d) = %t; want %t", tt.v1, tt.v2, eq, tt.eq)
+		}
+	}
+}

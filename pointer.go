@@ -26,3 +26,11 @@ func Value[T any](p *T) T {
 	var v T
 	return v
 }
+
+// Equal reports whether p1 and p2 represent the same value.
+func Equal[T comparable](p1, p2 *T) bool {
+	if p1 == nil || p2 == nil {
+		return p1 == p2
+	}
+	return *p1 == *p2
+}

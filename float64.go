@@ -23,3 +23,11 @@ func Float64Value(p *float64) float64 {
 	var v float64
 	return v
 }
+
+// EqualFloat64 reports whether p1 and p2 represent the same value.
+func EqualFloat64(p1, p2 *float64) bool {
+	if p1 == nil || p2 == nil {
+		return p1 == p2
+	}
+	return *p1 == *p2
+}

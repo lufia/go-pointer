@@ -46,3 +46,22 @@ func TestByteValue_Nil(t *testing.T) {
 		t.Errorf("ByteValue(nil) = %v; want %v", v, zero)
 	}
 }
+
+func TestEqualByte(t *testing.T) {
+	tests := []struct {
+		v1, v2 *byte
+		eq     bool
+	}{
+		{Byte(0), Byte('a'), false},
+		{Byte(0), Byte(0), true},
+		{Byte('a'), Byte('a'), true},
+		{nil, nil, true},
+		{nil, Byte(0), false},
+		{Byte(0), nil, false},
+	}
+	for _, tt := range tests {
+		if eq := EqualByte(tt.v1, tt.v2); eq != tt.eq {
+			t.Errorf("EqualByte(%d, %d) = %t; want %t", tt.v1, tt.v2, eq, tt.eq)
+		}
+	}
+}

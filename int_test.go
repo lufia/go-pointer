@@ -46,3 +46,22 @@ func TestIntValue_Nil(t *testing.T) {
 		t.Errorf("IntValue(nil) = %v; want %v", v, zero)
 	}
 }
+
+func TestEqualInt(t *testing.T) {
+	tests := []struct {
+		v1, v2 *int
+		eq     bool
+	}{
+		{Int(-(^0 >> 1) - 1), Int(-1), false},
+		{Int(-(^0 >> 1) - 1), Int(-(^0 >> 1) - 1), true},
+		{Int(-1), Int(-1), true},
+		{nil, nil, true},
+		{nil, Int(-(^0 >> 1) - 1), false},
+		{Int(-(^0 >> 1) - 1), nil, false},
+	}
+	for _, tt := range tests {
+		if eq := EqualInt(tt.v1, tt.v2); eq != tt.eq {
+			t.Errorf("EqualInt(%d, %d) = %t; want %t", tt.v1, tt.v2, eq, tt.eq)
+		}
+	}
+}

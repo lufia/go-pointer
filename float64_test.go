@@ -46,3 +46,22 @@ func TestFloat64Value_Nil(t *testing.T) {
 		t.Errorf("Float64Value(nil) = %v; want %v", v, zero)
 	}
 }
+
+func TestEqualFloat64(t *testing.T) {
+	tests := []struct {
+		v1, v2 *float64
+		eq     bool
+	}{
+		{Float64(0.), Float64(72.40), false},
+		{Float64(0.), Float64(0.), true},
+		{Float64(72.40), Float64(72.40), true},
+		{nil, nil, true},
+		{nil, Float64(0.), false},
+		{Float64(0.), nil, false},
+	}
+	for _, tt := range tests {
+		if eq := EqualFloat64(tt.v1, tt.v2); eq != tt.eq {
+			t.Errorf("EqualFloat64(%d, %d) = %t; want %t", tt.v1, tt.v2, eq, tt.eq)
+		}
+	}
+}

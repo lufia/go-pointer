@@ -23,3 +23,11 @@ func Int8Value(p *int8) int8 {
 	var v int8
 	return v
 }
+
+// EqualInt8 reports whether p1 and p2 represent the same value.
+func EqualInt8(p1, p2 *int8) bool {
+	if p1 == nil || p2 == nil {
+		return p1 == p2
+	}
+	return *p1 == *p2
+}

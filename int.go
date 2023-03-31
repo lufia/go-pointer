@@ -23,3 +23,11 @@ func IntValue(p *int) int {
 	var v int
 	return v
 }
+
+// EqualInt reports whether p1 and p2 represent the same value.
+func EqualInt(p1, p2 *int) bool {
+	if p1 == nil || p2 == nil {
+		return p1 == p2
+	}
+	return *p1 == *p2
+}

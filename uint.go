@@ -23,3 +23,11 @@ func UintValue(p *uint) uint {
 	var v uint
 	return v
 }
+
+// EqualUint reports whether p1 and p2 represent the same value.
+func EqualUint(p1, p2 *uint) bool {
+	if p1 == nil || p2 == nil {
+		return p1 == p2
+	}
+	return *p1 == *p2
+}

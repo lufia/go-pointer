@@ -23,3 +23,11 @@ func Uint16Value(p *uint16) uint16 {
 	var v uint16
 	return v
 }
+
+// EqualUint16 reports whether p1 and p2 represent the same value.
+func EqualUint16(p1, p2 *uint16) bool {
+	if p1 == nil || p2 == nil {
+		return p1 == p2
+	}
+	return *p1 == *p2
+}
