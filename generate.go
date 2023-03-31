@@ -36,7 +36,7 @@ func main() {
 	}
 	err := generate(&Target{
 		Type:     *flagType,
-		FuncName: title(*flagType),
+		Name:     title(*flagType),
 		TestData: flag.Args(),
 	})
 	if err != nil {
@@ -62,7 +62,7 @@ var (
 
 type Target struct {
 	Type     string
-	FuncName string
+	Name     string
 	TestData []string
 }
 

@@ -1,12 +1,12 @@
 package pointer
 
-// {{.FuncName}} returns a pointer to {{.Type}} that is initialized with v.
-func {{.FuncName}}(v {{.Type}}) *{{.Type}} {
+// {{.Name}} returns a pointer to {{.Type}} that is initialized with v.
+func {{.Name}}(v {{.Type}}) *{{.Type}} {
 	return &v
 }
 
-// {{.FuncName}}Slice returns a slice of pointer to {{.Type}}.
-func {{.FuncName}}Slice(a ...{{.Type}}) []*{{.Type}} {
+// {{.Name}}Slice returns a slice of pointer to {{.Type}}.
+func {{.Name}}Slice(a ...{{.Type}}) []*{{.Type}} {
 	p := make([]*{{.Type}}, len(a))
 	for i, v := range a {
 		v := v
@@ -15,8 +15,8 @@ func {{.FuncName}}Slice(a ...{{.Type}}) []*{{.Type}} {
 	return p
 }
 
-// {{.FuncName}}Value returns a value referenced by p. If p is nil, it will returns zero value of {{.Type}}.
-func {{.FuncName}}Value(p *{{.Type}}) {{.Type}} {
+// {{.Name}}Value returns a value referenced by p. If p is nil, it will returns zero value of {{.Type}}.
+func {{.Name}}Value(p *{{.Type}}) {{.Type}} {
 	if p != nil {
 		return *p
 	}
