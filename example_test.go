@@ -16,7 +16,7 @@ func Example() {
 	// hello
 }
 
-func Example_IntSlice() {
+func ExampleIntSlice() {
 	a := pointer.IntSlice(10, 20)
 	for _, p := range a {
 		fmt.Println(pointer.IntValue(p))

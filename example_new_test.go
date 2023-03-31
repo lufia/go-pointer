@@ -15,13 +15,13 @@ func Example_go1_18() {
 	// Output: hello
 }
 
-func Example_New() {
+func ExampleNew() {
 	p := pointer.New(10)
 	fmt.Println(pointer.Value(p))
 	// Output: 10
 }
 
-func Example_Slice() {
+func ExampleSlice() {
 	a := pointer.Slice(10, 20)
 	for _, p := range a {
 		fmt.Println(pointer.Value(p))
