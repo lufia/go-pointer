@@ -1,5 +1,7 @@
 package pointer
 
+import "fmt"
+
 // Uint returns a pointer to uint that is initialized with v.
 func Uint(v uint) *uint {
 	return &v
@@ -22,4 +24,31 @@ func UintValue(p *uint) uint {
 	}
 	var v uint
 	return v
+}
+
+// EqualUint reports whether p1 and p2 represent the same value.
+func EqualUint(p1, p2 *uint) bool {
+	if p1 == nil || p2 == nil {
+		return p1 == p2
+	}
+	return *p1 == *p2
+}
+
+// UintFormatter implements fmt.Formatter of a pointer to uint.
+type UintFormatter struct {
+	p *uint
+}
+
+// NewUintFormatter returns the formatter of a pointer to uint.
+func NewUintFormatter(p *uint) *UintFormatter {
+	return &UintFormatter{p}
+}
+
+// Format implements the fmt.Formatter interface.
+func (p UintFormatter) Format(f fmt.State, c rune) {
+	if p.p == nil {
+		fmt.Fprintf(f, "<nil>")
+		return
+	}
+	fmt.Fprintf(f, "%"+string(c), *p.p)
 }

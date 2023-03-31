@@ -1,12 +1,14 @@
 package pointer
 
-// {{.FuncName}} returns a pointer to {{.Type}} that is initialized with v.
-func {{.FuncName}}(v {{.Type}}) *{{.Type}} {
+import "fmt"
+
+// {{.Name}} returns a pointer to {{.Type}} that is initialized with v.
+func {{.Name}}(v {{.Type}}) *{{.Type}} {
 	return &v
 }
 
-// {{.FuncName}}Slice returns a slice of pointer to {{.Type}}.
-func {{.FuncName}}Slice(a ...{{.Type}}) []*{{.Type}} {
+// {{.Name}}Slice returns a slice of pointer to {{.Type}}.
+func {{.Name}}Slice(a ...{{.Type}}) []*{{.Type}} {
 	p := make([]*{{.Type}}, len(a))
 	for i, v := range a {
 		v := v
@@ -15,11 +17,38 @@ func {{.FuncName}}Slice(a ...{{.Type}}) []*{{.Type}} {
 	return p
 }
 
-// {{.FuncName}}Value returns a value referenced by p. If p is nil, it will returns zero value of {{.Type}}.
-func {{.FuncName}}Value(p *{{.Type}}) {{.Type}} {
+// {{.Name}}Value returns a value referenced by p. If p is nil, it will returns zero value of {{.Type}}.
+func {{.Name}}Value(p *{{.Type}}) {{.Type}} {
 	if p != nil {
 		return *p
 	}
 	var v {{.Type}}
 	return v
+}
+
+// Equal{{.Name}} reports whether p1 and p2 represent the same value.
+func Equal{{.Name}}(p1, p2 *{{.Type}}) bool {
+	if p1 == nil || p2 == nil {
+		return p1 == p2
+	}
+	return *p1 == *p2
+}
+
+// {{.Name}}Formatter implements fmt.Formatter of a pointer to {{.Type}}.
+type {{.Name}}Formatter struct {
+	p *{{.Type}}
+}
+
+// New{{.Name}}Formatter returns the formatter of a pointer to {{.Type}}.
+func New{{.Name}}Formatter(p *{{.Type}}) *{{.Name}}Formatter {
+	return &{{.Name}}Formatter{p}
+}
+
+// Format implements the fmt.Formatter interface.
+func (p {{.Name}}Formatter) Format(f fmt.State, c rune) {
+	if p.p == nil {
+		fmt.Fprintf(f, "<nil>")
+		return
+	}
+	fmt.Fprintf(f, "%"+string(c), *p.p)
 }

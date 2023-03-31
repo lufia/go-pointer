@@ -1,6 +1,7 @@
 package pointer
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -44,5 +45,42 @@ func TestFloat32Value_Nil(t *testing.T) {
 	v := Float32Value(nil)
 	if v != zero {
 		t.Errorf("Float32Value(nil) = %v; want %v", v, zero)
+	}
+}
+
+func TestEqualFloat32(t *testing.T) {
+	tests := []struct {
+		v1, v2 *float32
+		eq     bool
+	}{
+		{Float32(0.), Float32(72.40), false},
+		{Float32(0.), Float32(0.), true},
+		{Float32(72.40), Float32(72.40), true},
+		{nil, nil, true},
+		{nil, Float32(0.), false},
+		{Float32(0.), nil, false},
+	}
+	for _, tt := range tests {
+		if eq := EqualFloat32(tt.v1, tt.v2); eq != tt.eq {
+			t.Errorf("EqualFloat32(%d, %d) = %t; want %t", tt.v1, tt.v2, eq, tt.eq)
+		}
+	}
+}
+
+func TestFloat32FormatterFormat(t *testing.T) {
+	tests := []struct {
+		p *float32
+		s string
+	}{
+		{Float32(0.), fmt.Sprintf("%v", 0.)},
+		{Float32(72.40), fmt.Sprintf("%v", 72.40)},
+		{nil, "<nil>"},
+	}
+	for _, tt := range tests {
+		p := NewFloat32Formatter(tt.p)
+		s := fmt.Sprintf("%v", p)
+		if s != tt.s {
+			t.Errorf("{%+v}.Format() = %q; want %q", p, s, tt.s)
+		}
 	}
 }

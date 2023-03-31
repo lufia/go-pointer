@@ -1,6 +1,7 @@
 package pointer
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -44,5 +45,42 @@ func TestUint64Value_Nil(t *testing.T) {
 	v := Uint64Value(nil)
 	if v != zero {
 		t.Errorf("Uint64Value(nil) = %v; want %v", v, zero)
+	}
+}
+
+func TestEqualUint64(t *testing.T) {
+	tests := []struct {
+		v1, v2 *uint64
+		eq     bool
+	}{
+		{Uint64(0), Uint64(1), false},
+		{Uint64(0), Uint64(0), true},
+		{Uint64(1), Uint64(1), true},
+		{nil, nil, true},
+		{nil, Uint64(0), false},
+		{Uint64(0), nil, false},
+	}
+	for _, tt := range tests {
+		if eq := EqualUint64(tt.v1, tt.v2); eq != tt.eq {
+			t.Errorf("EqualUint64(%d, %d) = %t; want %t", tt.v1, tt.v2, eq, tt.eq)
+		}
+	}
+}
+
+func TestUint64FormatterFormat(t *testing.T) {
+	tests := []struct {
+		p *uint64
+		s string
+	}{
+		{Uint64(0), fmt.Sprintf("%v", 0)},
+		{Uint64(1), fmt.Sprintf("%v", 1)},
+		{nil, "<nil>"},
+	}
+	for _, tt := range tests {
+		p := NewUint64Formatter(tt.p)
+		s := fmt.Sprintf("%v", p)
+		if s != tt.s {
+			t.Errorf("{%+v}.Format() = %q; want %q", p, s, tt.s)
+		}
 	}
 }

@@ -1,29 +1,30 @@
 package pointer
 
 import (
+	"fmt"
 	"testing"
 )
 
-func Test{{.FuncName}}(t *testing.T) {
+func Test{{.Name}}(t *testing.T) {
 	tests := []{{.Type}}{
 		{{range .TestData}}{{.}}, {{- end}}
 	}
 	for _, v := range tests {
-		var p *{{.Type}} = {{.FuncName}}(v)
+		var p *{{.Type}} = {{.Name}}(v)
 		if p == nil {
-			t.Errorf("{{.FuncName}}(%v) = nil; want %v", v, v)
+			t.Errorf("{{.Name}}(%v) = nil; want %v", v, v)
 		}
-		if n := {{.FuncName}}Value(p); n != v {
-			t.Errorf("{{.FuncName}}(%v) = %v; want %v", v, n, v)
+		if n := {{.Name}}Value(p); n != v {
+			t.Errorf("{{.Name}}(%v) = %v; want %v", v, n, v)
 		}
 	}
 }
 
-func Test{{.FuncName}}Slice(t *testing.T) {
+func Test{{.Name}}Slice(t *testing.T) {
 	data := []{{.Type}}{
 		{{range .TestData}}{{.}}, {{- end}}
 	}
-	a := {{.FuncName}}Slice(data...)
+	a := {{.Name}}Slice(data...)
 	if len(a) != len(data) {
 		t.Errorf("len(slice) = %d; want %d", len(a), len(data))
 		return
@@ -32,17 +33,54 @@ func Test{{.FuncName}}Slice(t *testing.T) {
 		v := data[i]
 		switch {
 		case p == nil:
-			t.Errorf("{{.FuncName}}Slice(%v)[%d] = nil; want %v", data, i, v)
+			t.Errorf("{{.Name}}Slice(%v)[%d] = nil; want %v", data, i, v)
 		case *p != v:
-			t.Errorf("{{.FuncName}}Slice(%v)[%d] = %v; want %v", data, i, *p, v)
+			t.Errorf("{{.Name}}Slice(%v)[%d] = %v; want %v", data, i, *p, v)
 		}
 	}
 }
 
-func Test{{.FuncName}}Value_Nil(t *testing.T) {
+func Test{{.Name}}Value_Nil(t *testing.T) {
 	var zero {{.Type}}
-	v := {{.FuncName}}Value(nil)
+	v := {{.Name}}Value(nil)
 	if v != zero {
-		t.Errorf("{{.FuncName}}Value(nil) = %v; want %v", v, zero)
+		t.Errorf("{{.Name}}Value(nil) = %v; want %v", v, zero)
+	}
+}
+
+func TestEqual{{.Name}}(t *testing.T) {
+	tests := []struct {
+		v1, v2 *{{.Type}}
+		eq     bool
+	}{
+		{{"{"}}{{.Name}}({{index .TestData 0}}), {{.Name}}({{index .TestData 1}}), false},
+		{{"{"}}{{.Name}}({{index .TestData 0}}), {{.Name}}({{index .TestData 0}}), true},
+		{{"{"}}{{.Name}}({{index .TestData 1}}), {{.Name}}({{index .TestData 1}}), true},
+		{nil, nil, true},
+		{nil, {{.Name}}({{index .TestData 0}}), false},
+		{{"{"}}{{.Name}}({{index .TestData 0}}), nil, false},
+	}
+	for _, tt := range tests {
+		if eq := Equal{{.Name}}(tt.v1, tt.v2); eq != tt.eq {
+			t.Errorf("Equal{{.Name}}(%d, %d) = %t; want %t", tt.v1, tt.v2, eq, tt.eq)
+		}
+	}
+}
+
+func Test{{.Name}}FormatterFormat(t *testing.T) {
+	tests := []struct {
+		p *{{.Type}}
+		s string
+	}{
+		{{"{"}}{{.Name}}({{index .TestData 0}}), {{index .TestData 0 | printf `fmt.Sprintf("%%v", %s)`}}{{"}"}},
+		{{"{"}}{{.Name}}({{index .TestData 1}}), {{index .TestData 1 | printf `fmt.Sprintf("%%v", %s)`}}{{"}"}},
+		{nil, "<nil>"},
+	}
+	for _, tt := range tests {
+		p := New{{.Name}}Formatter(tt.p)
+		s := fmt.Sprintf("%v", p)
+		if s != tt.s {
+			t.Errorf("{%+v}.Format() = %q; want %q", p, s, tt.s)
+		}
 	}
 }

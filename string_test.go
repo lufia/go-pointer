@@ -1,6 +1,7 @@
 package pointer
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -44,5 +45,42 @@ func TestStringValue_Nil(t *testing.T) {
 	v := StringValue(nil)
 	if v != zero {
 		t.Errorf("StringValue(nil) = %v; want %v", v, zero)
+	}
+}
+
+func TestEqualString(t *testing.T) {
+	tests := []struct {
+		v1, v2 *string
+		eq     bool
+	}{
+		{String(""), String("hello, world!\n"), false},
+		{String(""), String(""), true},
+		{String("hello, world!\n"), String("hello, world!\n"), true},
+		{nil, nil, true},
+		{nil, String(""), false},
+		{String(""), nil, false},
+	}
+	for _, tt := range tests {
+		if eq := EqualString(tt.v1, tt.v2); eq != tt.eq {
+			t.Errorf("EqualString(%d, %d) = %t; want %t", tt.v1, tt.v2, eq, tt.eq)
+		}
+	}
+}
+
+func TestStringFormatterFormat(t *testing.T) {
+	tests := []struct {
+		p *string
+		s string
+	}{
+		{String(""), fmt.Sprintf("%v", "")},
+		{String("hello, world!\n"), fmt.Sprintf("%v", "hello, world!\n")},
+		{nil, "<nil>"},
+	}
+	for _, tt := range tests {
+		p := NewStringFormatter(tt.p)
+		s := fmt.Sprintf("%v", p)
+		if s != tt.s {
+			t.Errorf("{%+v}.Format() = %q; want %q", p, s, tt.s)
+		}
 	}
 }

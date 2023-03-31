@@ -1,6 +1,7 @@
 package pointer
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -44,5 +45,42 @@ func TestUint16Value_Nil(t *testing.T) {
 	v := Uint16Value(nil)
 	if v != zero {
 		t.Errorf("Uint16Value(nil) = %v; want %v", v, zero)
+	}
+}
+
+func TestEqualUint16(t *testing.T) {
+	tests := []struct {
+		v1, v2 *uint16
+		eq     bool
+	}{
+		{Uint16(0), Uint16(1), false},
+		{Uint16(0), Uint16(0), true},
+		{Uint16(1), Uint16(1), true},
+		{nil, nil, true},
+		{nil, Uint16(0), false},
+		{Uint16(0), nil, false},
+	}
+	for _, tt := range tests {
+		if eq := EqualUint16(tt.v1, tt.v2); eq != tt.eq {
+			t.Errorf("EqualUint16(%d, %d) = %t; want %t", tt.v1, tt.v2, eq, tt.eq)
+		}
+	}
+}
+
+func TestUint16FormatterFormat(t *testing.T) {
+	tests := []struct {
+		p *uint16
+		s string
+	}{
+		{Uint16(0), fmt.Sprintf("%v", 0)},
+		{Uint16(1), fmt.Sprintf("%v", 1)},
+		{nil, "<nil>"},
+	}
+	for _, tt := range tests {
+		p := NewUint16Formatter(tt.p)
+		s := fmt.Sprintf("%v", p)
+		if s != tt.s {
+			t.Errorf("{%+v}.Format() = %q; want %q", p, s, tt.s)
+		}
 	}
 }

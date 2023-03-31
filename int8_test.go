@@ -1,6 +1,7 @@
 package pointer
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -44,5 +45,42 @@ func TestInt8Value_Nil(t *testing.T) {
 	v := Int8Value(nil)
 	if v != zero {
 		t.Errorf("Int8Value(nil) = %v; want %v", v, zero)
+	}
+}
+
+func TestEqualInt8(t *testing.T) {
+	tests := []struct {
+		v1, v2 *int8
+		eq     bool
+	}{
+		{Int8(-(1 << 7)), Int8(0), false},
+		{Int8(-(1 << 7)), Int8(-(1 << 7)), true},
+		{Int8(0), Int8(0), true},
+		{nil, nil, true},
+		{nil, Int8(-(1 << 7)), false},
+		{Int8(-(1 << 7)), nil, false},
+	}
+	for _, tt := range tests {
+		if eq := EqualInt8(tt.v1, tt.v2); eq != tt.eq {
+			t.Errorf("EqualInt8(%d, %d) = %t; want %t", tt.v1, tt.v2, eq, tt.eq)
+		}
+	}
+}
+
+func TestInt8FormatterFormat(t *testing.T) {
+	tests := []struct {
+		p *int8
+		s string
+	}{
+		{Int8(-(1 << 7)), fmt.Sprintf("%v", -(1 << 7))},
+		{Int8(0), fmt.Sprintf("%v", 0)},
+		{nil, "<nil>"},
+	}
+	for _, tt := range tests {
+		p := NewInt8Formatter(tt.p)
+		s := fmt.Sprintf("%v", p)
+		if s != tt.s {
+			t.Errorf("{%+v}.Format() = %q; want %q", p, s, tt.s)
+		}
 	}
 }

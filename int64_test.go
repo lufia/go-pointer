@@ -1,6 +1,7 @@
 package pointer
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -44,5 +45,42 @@ func TestInt64Value_Nil(t *testing.T) {
 	v := Int64Value(nil)
 	if v != zero {
 		t.Errorf("Int64Value(nil) = %v; want %v", v, zero)
+	}
+}
+
+func TestEqualInt64(t *testing.T) {
+	tests := []struct {
+		v1, v2 *int64
+		eq     bool
+	}{
+		{Int64(-(1 << 63)), Int64(-1), false},
+		{Int64(-(1 << 63)), Int64(-(1 << 63)), true},
+		{Int64(-1), Int64(-1), true},
+		{nil, nil, true},
+		{nil, Int64(-(1 << 63)), false},
+		{Int64(-(1 << 63)), nil, false},
+	}
+	for _, tt := range tests {
+		if eq := EqualInt64(tt.v1, tt.v2); eq != tt.eq {
+			t.Errorf("EqualInt64(%d, %d) = %t; want %t", tt.v1, tt.v2, eq, tt.eq)
+		}
+	}
+}
+
+func TestInt64FormatterFormat(t *testing.T) {
+	tests := []struct {
+		p *int64
+		s string
+	}{
+		{Int64(-(1 << 63)), fmt.Sprintf("%v", -(1 << 63))},
+		{Int64(-1), fmt.Sprintf("%v", -1)},
+		{nil, "<nil>"},
+	}
+	for _, tt := range tests {
+		p := NewInt64Formatter(tt.p)
+		s := fmt.Sprintf("%v", p)
+		if s != tt.s {
+			t.Errorf("{%+v}.Format() = %q; want %q", p, s, tt.s)
+		}
 	}
 }

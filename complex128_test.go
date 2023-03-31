@@ -1,6 +1,7 @@
 package pointer
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -44,5 +45,42 @@ func TestComplex128Value_Nil(t *testing.T) {
 	v := Complex128Value(nil)
 	if v != zero {
 		t.Errorf("Complex128Value(nil) = %v; want %v", v, zero)
+	}
+}
+
+func TestEqualComplex128(t *testing.T) {
+	tests := []struct {
+		v1, v2 *complex128
+		eq     bool
+	}{
+		{Complex128(0i), Complex128(123i), false},
+		{Complex128(0i), Complex128(0i), true},
+		{Complex128(123i), Complex128(123i), true},
+		{nil, nil, true},
+		{nil, Complex128(0i), false},
+		{Complex128(0i), nil, false},
+	}
+	for _, tt := range tests {
+		if eq := EqualComplex128(tt.v1, tt.v2); eq != tt.eq {
+			t.Errorf("EqualComplex128(%d, %d) = %t; want %t", tt.v1, tt.v2, eq, tt.eq)
+		}
+	}
+}
+
+func TestComplex128FormatterFormat(t *testing.T) {
+	tests := []struct {
+		p *complex128
+		s string
+	}{
+		{Complex128(0i), fmt.Sprintf("%v", 0i)},
+		{Complex128(123i), fmt.Sprintf("%v", 123i)},
+		{nil, "<nil>"},
+	}
+	for _, tt := range tests {
+		p := NewComplex128Formatter(tt.p)
+		s := fmt.Sprintf("%v", p)
+		if s != tt.s {
+			t.Errorf("{%+v}.Format() = %q; want %q", p, s, tt.s)
+		}
 	}
 }
