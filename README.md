@@ -4,7 +4,6 @@ Utilities that returns a pointer to the value.
 
 [![GoDev][godev-image]][godev-url]
 [![Actions Status][actions-image]][actions-url]
-[![Coverage Status][coveralls-image]][coveralls-url]
 
 ## DESCRIPTION
 
@@ -42,5 +41,3 @@ func main() {
 [godev-url]: https://pkg.go.dev/github.com/lufia/go-pointer
 [actions-image]: https://github.com/lufia/go-pointer/workflows/Test/badge.svg?branch=main
 [actions-url]: https://github.com/lufia/go-pointer/actions?workflow=Test
-[coveralls-image]: https://coveralls.io/repos/github/lufia/go-pointer/badge.svg
-[coveralls-url]: https://coveralls.io/github/lufia/go-pointer
