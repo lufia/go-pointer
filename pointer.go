@@ -1,6 +1,3 @@
-//go:build go1.18
-// +build go1.18
-
 package pointer
 
 // New returns a pointer to T that is initialized with v.
