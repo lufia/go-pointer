@@ -1,6 +1,9 @@
 package pointer
 
-import "fmt"
+import (
+	"cmp"
+	"fmt"
+)
 
 // Uint returns a pointer to uint that is initialized with v.
 func Uint(v uint) *uint {
@@ -19,11 +22,7 @@ func UintSlice(a ...uint) []*uint {
 
 // UintValue returns a value referenced by p. If p is nil, it will returns zero value of uint.
 func UintValue(p *uint) uint {
-	if p != nil {
-		return *p
-	}
-	var v uint
-	return v
+	return *cmp.Or(p, new(uint))
 }
 
 // EqualUint reports whether p1 and p2 represent the same value.

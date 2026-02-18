@@ -1,6 +1,9 @@
 package pointer
 
-import "fmt"
+import (
+	"cmp"
+	"fmt"
+)
 
 // Int returns a pointer to int that is initialized with v.
 func Int(v int) *int {
@@ -19,11 +22,7 @@ func IntSlice(a ...int) []*int {
 
 // IntValue returns a value referenced by p. If p is nil, it will returns zero value of int.
 func IntValue(p *int) int {
-	if p != nil {
-		return *p
-	}
-	var v int
-	return v
+	return *cmp.Or(p, new(int))
 }
 
 // EqualInt reports whether p1 and p2 represent the same value.

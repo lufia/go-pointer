@@ -1,6 +1,9 @@
 package pointer
 
-import "fmt"
+import (
+	"cmp"
+	"fmt"
+)
 
 // Int32 returns a pointer to int32 that is initialized with v.
 func Int32(v int32) *int32 {
@@ -19,11 +22,7 @@ func Int32Slice(a ...int32) []*int32 {
 
 // Int32Value returns a value referenced by p. If p is nil, it will returns zero value of int32.
 func Int32Value(p *int32) int32 {
-	if p != nil {
-		return *p
-	}
-	var v int32
-	return v
+	return *cmp.Or(p, new(int32))
 }
 
 // EqualInt32 reports whether p1 and p2 represent the same value.

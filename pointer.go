@@ -1,7 +1,6 @@
-//go:build go1.18
-// +build go1.18
-
 package pointer
+
+import "cmp"
 
 // New returns a pointer to T that is initialized with v.
 func New[T any](v T) *T {
@@ -20,11 +19,7 @@ func Slice[T any](a ...T) []*T {
 
 // Value returns a value referenced by p. If p is nil, it will returns zero value of T.
 func Value[T any](p *T) T {
-	if p != nil {
-		return *p
-	}
-	var v T
-	return v
+	return *cmp.Or(p, new(T))
 }
 
 // Equal reports whether p1 and p2 represent the same value.

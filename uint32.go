@@ -1,6 +1,9 @@
 package pointer
 
-import "fmt"
+import (
+	"cmp"
+	"fmt"
+)
 
 // Uint32 returns a pointer to uint32 that is initialized with v.
 func Uint32(v uint32) *uint32 {
@@ -19,11 +22,7 @@ func Uint32Slice(a ...uint32) []*uint32 {
 
 // Uint32Value returns a value referenced by p. If p is nil, it will returns zero value of uint32.
 func Uint32Value(p *uint32) uint32 {
-	if p != nil {
-		return *p
-	}
-	var v uint32
-	return v
+	return *cmp.Or(p, new(uint32))
 }
 
 // EqualUint32 reports whether p1 and p2 represent the same value.

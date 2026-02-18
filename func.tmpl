@@ -1,6 +1,9 @@
 package pointer
 
-import "fmt"
+import (
+	"fmt"
+	"cmp"
+)
 
 // {{.Name}} returns a pointer to {{.Type}} that is initialized with v.
 func {{.Name}}(v {{.Type}}) *{{.Type}} {
@@ -19,11 +22,7 @@ func {{.Name}}Slice(a ...{{.Type}}) []*{{.Type}} {
 
 // {{.Name}}Value returns a value referenced by p. If p is nil, it will returns zero value of {{.Type}}.
 func {{.Name}}Value(p *{{.Type}}) {{.Type}} {
-	if p != nil {
-		return *p
-	}
-	var v {{.Type}}
-	return v
+	return *cmp.Or(p, new({{.Type}}))
 }
 
 // Equal{{.Name}} reports whether p1 and p2 represent the same value.

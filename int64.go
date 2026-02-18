@@ -1,6 +1,9 @@
 package pointer
 
-import "fmt"
+import (
+	"cmp"
+	"fmt"
+)
 
 // Int64 returns a pointer to int64 that is initialized with v.
 func Int64(v int64) *int64 {
@@ -19,11 +22,7 @@ func Int64Slice(a ...int64) []*int64 {
 
 // Int64Value returns a value referenced by p. If p is nil, it will returns zero value of int64.
 func Int64Value(p *int64) int64 {
-	if p != nil {
-		return *p
-	}
-	var v int64
-	return v
+	return *cmp.Or(p, new(int64))
 }
 
 // EqualInt64 reports whether p1 and p2 represent the same value.

@@ -1,6 +1,9 @@
 package pointer
 
-import "fmt"
+import (
+	"cmp"
+	"fmt"
+)
 
 // Complex128 returns a pointer to complex128 that is initialized with v.
 func Complex128(v complex128) *complex128 {
@@ -19,11 +22,7 @@ func Complex128Slice(a ...complex128) []*complex128 {
 
 // Complex128Value returns a value referenced by p. If p is nil, it will returns zero value of complex128.
 func Complex128Value(p *complex128) complex128 {
-	if p != nil {
-		return *p
-	}
-	var v complex128
-	return v
+	return *cmp.Or(p, new(complex128))
 }
 
 // EqualComplex128 reports whether p1 and p2 represent the same value.
