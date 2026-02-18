@@ -1,6 +1,9 @@
 package pointer
 
-import "fmt"
+import (
+	"cmp"
+	"fmt"
+)
 
 // Float64 returns a pointer to float64 that is initialized with v.
 func Float64(v float64) *float64 {
@@ -19,11 +22,7 @@ func Float64Slice(a ...float64) []*float64 {
 
 // Float64Value returns a value referenced by p. If p is nil, it will returns zero value of float64.
 func Float64Value(p *float64) float64 {
-	if p != nil {
-		return *p
-	}
-	var v float64
-	return v
+	return *cmp.Or(p, new(float64))
 }
 
 // EqualFloat64 reports whether p1 and p2 represent the same value.

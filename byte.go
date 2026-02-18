@@ -1,6 +1,9 @@
 package pointer
 
-import "fmt"
+import (
+	"cmp"
+	"fmt"
+)
 
 // Byte returns a pointer to byte that is initialized with v.
 func Byte(v byte) *byte {
@@ -19,11 +22,7 @@ func ByteSlice(a ...byte) []*byte {
 
 // ByteValue returns a value referenced by p. If p is nil, it will returns zero value of byte.
 func ByteValue(p *byte) byte {
-	if p != nil {
-		return *p
-	}
-	var v byte
-	return v
+	return *cmp.Or(p, new(byte))
 }
 
 // EqualByte reports whether p1 and p2 represent the same value.

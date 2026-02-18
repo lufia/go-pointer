@@ -1,6 +1,9 @@
 package pointer
 
-import "fmt"
+import (
+	"cmp"
+	"fmt"
+)
 
 // Int8 returns a pointer to int8 that is initialized with v.
 func Int8(v int8) *int8 {
@@ -19,11 +22,7 @@ func Int8Slice(a ...int8) []*int8 {
 
 // Int8Value returns a value referenced by p. If p is nil, it will returns zero value of int8.
 func Int8Value(p *int8) int8 {
-	if p != nil {
-		return *p
-	}
-	var v int8
-	return v
+	return *cmp.Or(p, new(int8))
 }
 
 // EqualInt8 reports whether p1 and p2 represent the same value.

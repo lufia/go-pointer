@@ -1,6 +1,9 @@
 package pointer
 
-import "fmt"
+import (
+	"cmp"
+	"fmt"
+)
 
 // Uint16 returns a pointer to uint16 that is initialized with v.
 func Uint16(v uint16) *uint16 {
@@ -19,11 +22,7 @@ func Uint16Slice(a ...uint16) []*uint16 {
 
 // Uint16Value returns a value referenced by p. If p is nil, it will returns zero value of uint16.
 func Uint16Value(p *uint16) uint16 {
-	if p != nil {
-		return *p
-	}
-	var v uint16
-	return v
+	return *cmp.Or(p, new(uint16))
 }
 
 // EqualUint16 reports whether p1 and p2 represent the same value.

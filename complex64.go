@@ -1,6 +1,9 @@
 package pointer
 
-import "fmt"
+import (
+	"cmp"
+	"fmt"
+)
 
 // Complex64 returns a pointer to complex64 that is initialized with v.
 func Complex64(v complex64) *complex64 {
@@ -19,11 +22,7 @@ func Complex64Slice(a ...complex64) []*complex64 {
 
 // Complex64Value returns a value referenced by p. If p is nil, it will returns zero value of complex64.
 func Complex64Value(p *complex64) complex64 {
-	if p != nil {
-		return *p
-	}
-	var v complex64
-	return v
+	return *cmp.Or(p, new(complex64))
 }
 
 // EqualComplex64 reports whether p1 and p2 represent the same value.

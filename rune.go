@@ -1,6 +1,9 @@
 package pointer
 
-import "fmt"
+import (
+	"cmp"
+	"fmt"
+)
 
 // Rune returns a pointer to rune that is initialized with v.
 func Rune(v rune) *rune {
@@ -19,11 +22,7 @@ func RuneSlice(a ...rune) []*rune {
 
 // RuneValue returns a value referenced by p. If p is nil, it will returns zero value of rune.
 func RuneValue(p *rune) rune {
-	if p != nil {
-		return *p
-	}
-	var v rune
-	return v
+	return *cmp.Or(p, new(rune))
 }
 
 // EqualRune reports whether p1 and p2 represent the same value.

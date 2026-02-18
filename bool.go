@@ -1,6 +1,9 @@
 package pointer
 
-import "fmt"
+import (
+	"cmp"
+	"fmt"
+)
 
 // Bool returns a pointer to bool that is initialized with v.
 func Bool(v bool) *bool {
@@ -19,11 +22,7 @@ func BoolSlice(a ...bool) []*bool {
 
 // BoolValue returns a value referenced by p. If p is nil, it will returns zero value of bool.
 func BoolValue(p *bool) bool {
-	if p != nil {
-		return *p
-	}
-	var v bool
-	return v
+	return *cmp.Or(p, new(bool))
 }
 
 // EqualBool reports whether p1 and p2 represent the same value.

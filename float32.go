@@ -1,6 +1,9 @@
 package pointer
 
-import "fmt"
+import (
+	"cmp"
+	"fmt"
+)
 
 // Float32 returns a pointer to float32 that is initialized with v.
 func Float32(v float32) *float32 {
@@ -19,11 +22,7 @@ func Float32Slice(a ...float32) []*float32 {
 
 // Float32Value returns a value referenced by p. If p is nil, it will returns zero value of float32.
 func Float32Value(p *float32) float32 {
-	if p != nil {
-		return *p
-	}
-	var v float32
-	return v
+	return *cmp.Or(p, new(float32))
 }
 
 // EqualFloat32 reports whether p1 and p2 represent the same value.
